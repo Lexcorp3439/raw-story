@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.egorius.rawstory.entitys.Product;
@@ -26,5 +28,11 @@ public class ProductsController {
     @GetMapping("/all")
     public ResponseEntity<List<Product>> getAllProducts() {
         return ResponseEntity.ok(service.getAllProducts());
+    }
+
+    @PostMapping(value = "/add", produces = "application/json")
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+        service.addNewProduct(product);
+        return ResponseEntity.ok(product);
     }
 }

@@ -27,8 +27,8 @@ public class Post {
     @Column
     private String descriprion;
 
-    @Column
-    private List<String> paths;
+//    @Column
+//    private List<String> paths;
 
     public String getName() {
         return name;
@@ -54,11 +54,11 @@ public class Post {
         this.descriprion = descriprion;
     }
 
-    public List<String> getPaths() {
-        return paths;
-    }
-
-    public void setPaths(List<String> paths) {
-        this.paths = paths;
-    }
+//    public List<String> getPaths() {
+//        return paths;
+//    }
+//
+//    public void setPaths(List<String> paths) {
+//        this.paths = paths;
+//    }
 }

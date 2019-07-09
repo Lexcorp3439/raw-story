@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 public class Product {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
