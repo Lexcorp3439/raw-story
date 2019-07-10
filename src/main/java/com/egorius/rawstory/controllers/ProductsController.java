@@ -2,7 +2,6 @@ package com.egorius.rawstory.controllers;
 
 import java.util.List;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -34,5 +33,10 @@ public class ProductsController {
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
         service.addNewProduct(product);
         return ResponseEntity.ok(product);
+    }
+
+    @GetMapping("/add")
+    public ResponseEntity<String> addProduct() {
+        return ResponseEntity.ok("Need POST request");
     }
 }

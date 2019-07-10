@@ -29,10 +29,15 @@ public class BlogController {
         return ResponseEntity.ok(service.getAllPosts());
     }
 
-    @PostMapping("/add")
+    @PostMapping(value = "/add", produces = "application/json")
     public ResponseEntity<Post> addPost(@RequestBody Post post) {
         service.addNewPost(post);
         return ResponseEntity.ok(post);
+    }
+
+    @GetMapping("/add")
+    public ResponseEntity<String> addPost() {
+        return ResponseEntity.ok("Need POST request");
     }
 
 }

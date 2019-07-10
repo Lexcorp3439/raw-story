@@ -19,7 +19,10 @@ public class Post extends BaseEntity {
     @Column
     private String date;
 
-    @Column
+    @Column(
+            name = "description",
+            columnDefinition = "text"
+    )
     private String description;
 
     @Type( type = "string-array" )
