@@ -1,34 +1,33 @@
 package com.egorius.rawstory.entitys;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
+
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "posts")
-public class Post {
+import org.hibernate.annotations.Type;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
+@SuppressWarnings("unused")
+@Entity
+@Table(name = "blog")
+public class Post extends BaseEntity {
+
+    @Column
     private String name;
 
     @Column
     private String date;
 
     @Column
-    private String descriprion;
+    private String description;
 
-//    @Column
-//    private List<String> paths;
+    @Type( type = "string-array" )
+    @Column(
+            name = "images",
+            columnDefinition = "text[]"
+    )
+    private String[] paths;
 
     public String getName() {
         return name;
@@ -46,19 +45,19 @@ public class Post {
         this.date = date;
     }
 
-    public String getDescriprion() {
-        return descriprion;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriprion(String descriprion) {
-        this.descriprion = descriprion;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-//    public List<String> getPaths() {
-//        return paths;
-//    }
-//
-//    public void setPaths(List<String> paths) {
-//        this.paths = paths;
-//    }
+    public String[] getPaths() {
+        return paths;
+    }
+
+    public void setPaths(String[] paths) {
+        this.paths = paths;
+    }
 }
