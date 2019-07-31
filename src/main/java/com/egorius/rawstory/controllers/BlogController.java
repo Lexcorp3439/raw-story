@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.egorius.rawstory.bot.ServerBot;
 import com.egorius.rawstory.entitys.Post;
 import com.egorius.rawstory.services.BlogService;
 
@@ -31,6 +32,13 @@ public class BlogController {
 
     @PostMapping(value = "/add", produces = "application/json")
     public ResponseEntity<Post> addPost(@RequestBody Post post) {
+        String[] imgPaths = post.getPaths();
+        String[] img = new String[imgPaths.length];
+
+        for (int i = 0; i < imgPaths.length; i++) {
+            img[i] = ServerBot.serverBot.downloadImg(imgPaths[i]);
+        }
+        post.setPaths(img);
         service.addNewPost(post);
         return ResponseEntity.ok(post);
     }
