@@ -17,12 +17,12 @@ import org.telegram.telegrambots.meta.logging.BotLogger;
 public class ServerBot extends TelegramLongPollingBot {
     private static final String BOT_NAME = "Raw Server Bot";
     private static final String BOT_USERNAME = "raw_server_bot";
-    private static final String BOT_TOKEN = "876212460:AAFXA1t7epiicYunoWbnZnbvxwMaNhX4PCg";
+    private static final String BOT_TOKEN = "955749705:AAEcVXkLTjiiiNrmDynyPsMyUGtin8B9Igw";
     private static final String RAW_BOT_TOKEN = "876212460:AAFXA1t7epiicYunoWbnZnbvxwMaNhX4PCg";
-    private static String TOKEN;
+    private static String TOKEN = BOT_TOKEN;
     private static final String TAG = "HandBot message";
 
-    public static ServerBot serverBot = new ServerBot();
+    public static final ServerBot serverBot = new ServerBot();
 
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
@@ -48,10 +48,9 @@ public class ServerBot extends TelegramLongPollingBot {
         }
     }
 
-    private String resource = this.getClass().getResource("/static").getPath();
-
     public String downloadImg(String id) {
         try {
+            String resource = this.getClass().getResource("/static").getPath();
             TOKEN = RAW_BOT_TOKEN;
             File file = execute(new GetFile().setFileId(id));
             System.out.println(file.getFileUrl(getBotToken()));
