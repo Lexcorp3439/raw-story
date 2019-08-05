@@ -1,6 +1,9 @@
 package com.egorius.rawstory.entitys;
 
+import org.hibernate.annotations.Type;
+
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -21,8 +24,12 @@ public class Product extends BaseEntity{
     @NotNull
     private String description;
 
-    @Column(name = "image")
-    private String imagePath;
+    @Type( type = "string-array" )
+    @Column(
+            name = "images",
+            columnDefinition = "text[]"
+    )
+    private String[] paths;
 
     @Column
     @NotNull
@@ -60,12 +67,12 @@ public class Product extends BaseEntity{
         this.description = description;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public String[] getPaths() {
+        return paths;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setPaths(String[] paths) {
+        this.paths = paths;
     }
 
     public BigDecimal getCost() {
@@ -110,23 +117,23 @@ public class Product extends BaseEntity{
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return squirrels == product.squirrels &&
+        return cal == product.cal &&
+                squirrels == product.squirrels &&
                 fats == product.fats &&
                 carbohydrates == product.carbohydrates &&
                 name.equals(product.name) &&
                 description.equals(product.description) &&
-                imagePath.equals(product.imagePath);
+                Arrays.equals(paths, product.paths) &&
+                cost.equals(product.cost);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, imagePath, squirrels, fats, carbohydrates);
+        int result = Objects.hash(name, description, cost, cal, squirrels, fats, carbohydrates);
+        result = 31 * result + Arrays.hashCode(paths);
+        return result;
     }
 }

@@ -18,6 +18,8 @@ public class RawstoryApplication {
     private static final String PROXY_ADDRESS = "178.197.248.213";
 
     public static void main(String[] args) {
+        SpringApplication.run(new Class[] {RawstoryApplication.class, AppConfig.class}, args);
+
         System.getProperties().put( "proxySet", "true" );
         System.getProperties().put( "socksProxyHost", PROXY_ADDRESS );
         System.getProperties().put( "socksProxyPort", PROXY_PORT );
@@ -34,7 +36,6 @@ public class RawstoryApplication {
             e.printStackTrace();
         }
 
-        SpringApplication.run(new Class[] {RawstoryApplication.class, AppConfig.class}, args);
 
     }
 //

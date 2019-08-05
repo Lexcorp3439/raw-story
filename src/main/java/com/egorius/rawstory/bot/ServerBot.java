@@ -50,22 +50,30 @@ public class ServerBot extends TelegramLongPollingBot {
 
     public String downloadImg(String id) {
         try {
-            String resource = this.getClass().getResource("/static").getPath();
+            String resource = "L:\\IdeaProjects\\raw-story\\src\\main\\resources\\static";
             TOKEN = RAW_BOT_TOKEN;
             File file = execute(new GetFile().setFileId(id));
             System.out.println(file.getFileUrl(getBotToken()));
             java.io.File fileI = downloadFile(file);
             TOKEN = BOT_TOKEN;
-            java.io.File f = new java.io.File(resource.concat("/" + id + ".img"));
+            String filePath = resource.concat("/" + id + ".jpg");
+            java.io.File f = new java.io.File(filePath);
             if (fileI.renameTo(f)) {
                 System.out.println("Файл успешно перемещён!");
-                return f.getPath();
+                return filePath;
+            } else {
+                if (fileI.delete()){
+                    System.out.println("Файл был успешно удален");
+                    return filePath;
+                } else {
+                    System.out.println("Файл НЕ УДАЛЕН");
+                }
             }
+
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
-        System.out.println("Файл неудалось переместить.");
-        return null;
+        return "";
     }
 
     public String getBotUsername() {

@@ -1,9 +1,6 @@
 package com.egorius.rawstory.entitys;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.Type;
 
@@ -12,6 +9,10 @@ import org.hibernate.annotations.Type;
 @Entity
 @Table(name = "blog")
 public class Post extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column
     private String name;
