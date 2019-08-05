@@ -1,7 +1,5 @@
 package com.egorius.rawstory.controllers;
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,20 +33,7 @@ public class BlogController {
     @PostMapping(value = "/add", produces = "application/json")
     public ResponseEntity<Post> addPost(@RequestBody Post post) {
         System.out.println(post.getDate());
-        String[] imgPaths = post.getPaths();
-        System.out.println(Arrays.toString(imgPaths));
-        String[] img = new String[imgPaths.length];
 
-        int i = 0;
-        for (String imgP : imgPaths) {
-            String path = ServerBot.serverBot.downloadImg(imgP);
-            if (path.length() != 0) {
-                img[i] = path;
-                i++;
-            }
-        }
-        System.out.println(Arrays.toString(img));
-        post.setPaths(img);
         service.addNewPost(post);
         return ResponseEntity.ok(post);
     }

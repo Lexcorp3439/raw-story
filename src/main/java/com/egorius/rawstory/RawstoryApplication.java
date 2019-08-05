@@ -27,7 +27,6 @@ public class RawstoryApplication {
 
         ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
-//        ServerBot bot  = new ServerBot();
         try {
             telegramBotsApi.registerBot(ServerBot.serverBot);
             System.out.println("Есть контакт");
@@ -38,9 +37,5 @@ public class RawstoryApplication {
 
 
     }
-//
-//    @Bean
-//    public ServerBot getServerBot() {
-//        return new ServerBot();
-//    }
+
 }
