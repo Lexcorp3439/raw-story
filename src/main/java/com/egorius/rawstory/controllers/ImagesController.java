@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,31 +23,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class ImagesController {
     private static final String resource = "L:\\IdeaProjects\\raw-story\\src\\main\\resources\\static";
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getImage(@PathVariable String id) {
         File file = new File(resource.concat("\\" + id).concat(".jpg"));
 
-        ByteArrayOutputStream out = new ByteArrayOutputStream();;
-        try(
-                InputStream input = new BufferedInputStream(new FileInputStream(file))
-        ) {
-            int data = 0;
-            while ((data = input.read()) != -1) {
-                out.write(data);
-            }
-        } catch (IOException e) {
-            return null;
-        } finally {
-            try {
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try(BufferedInputStream in = new BufferedInputStream(new FileInputStream(file))) {
+            byte[] bytes = IOUtils.toByteArray(in);
+            return new ResponseEntity<>(bytes, HttpStatus.OK);
+        } catch (IOException ex) {
+            return new ResponseEntity<>(new byte[]{}, HttpStatus.NO_CONTENT);
         }
-        byte[] bytes = out.toByteArray();
-
-        final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_JPEG);
-        return new ResponseEntity<>(bytes, headers, HttpStatus.CREATED);
     }
 }
