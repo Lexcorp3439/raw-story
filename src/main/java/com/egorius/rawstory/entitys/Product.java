@@ -6,15 +6,16 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @SuppressWarnings("unused")
 @Entity
 @Table(name = "products")
 public class Product extends BaseEntity{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column
     @NotNull

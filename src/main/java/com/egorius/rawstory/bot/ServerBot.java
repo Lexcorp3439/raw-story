@@ -1,8 +1,6 @@
 package com.egorius.rawstory.bot;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.GetFile;
@@ -24,28 +22,27 @@ public class ServerBot extends TelegramLongPollingBot {
 
     public static final ServerBot serverBot = new ServerBot();
 
-    public void onUpdateReceived(Update update) {
-        Message message = update.getMessage();
-        if (message.hasText()) {
-            if (message.getText().equals("/help")) {
-                sendMsg(message, "Hi, ma name is ".concat(BOT_NAME));
-            } else {
-                sendMsg(message, "Hello World");
-            }
-        }
+    private Set<Long> chatIds = new HashSet<>();
+
+    public void addChatId(long id) {
+        chatIds.add(id);
     }
 
-    private void sendMsg(Message message, String text) {
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.enableMarkdown(true);
-        sendMessage.setChatId(message.getChatId());
-//        sendMessage.setReplyToMessageId(message.getMessageId()); // для пеересылки сообщения
-        sendMessage.setText(text);
-        try {
-            execute(sendMessage);
-        } catch (TelegramApiException e) {
-            BotLogger.error("Could not send message", TAG, e);
+    public void sendMsg(String text) {
+        TOKEN = RAW_BOT_TOKEN;
+        for (Long id: chatIds) {
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.enableMarkdown(true);
+            sendMessage.setChatId(id);
+            sendMessage.setText(text);
+
+            try {
+                execute(sendMessage);
+            } catch (TelegramApiException e) {
+                BotLogger.error("Could not send message", TAG, e);
+            }
         }
+        TOKEN = BOT_TOKEN;
     }
 
     public String downloadImg(String id) {
@@ -69,11 +66,15 @@ public class ServerBot extends TelegramLongPollingBot {
                     System.out.println("Файл НЕ УДАЛЕН");
                 }
             }
-
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
         return "";
+    }
+
+    @Override
+    public void onUpdateReceived(Update update) {
+
     }
 
     public String getBotUsername() {
