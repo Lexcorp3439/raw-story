@@ -19,7 +19,7 @@ public class TelegramBotController {
         try {
             ServerBot.serverBot.addChatId(Long.parseLong(id));
         } catch (NumberFormatException e) {
-            return new ResponseEntity<>(id, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("error: L", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(id, HttpStatus.OK);
     }

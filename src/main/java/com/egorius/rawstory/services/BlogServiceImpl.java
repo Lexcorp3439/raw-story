@@ -35,16 +35,7 @@ public class BlogServiceImpl implements BlogService{
     @Override
     public Post addNewPost(Post post) {
         String[] imgPaths = post.getPaths();
-        String[] img = new String[imgPaths.length];
-
-        int i = 0;
-        for (String imgP : imgPaths) {
-            String path = ServerBot.serverBot.downloadImg(imgP);
-            if (path.length() != 0) {
-                img[i] = path;
-                i++;
-            }
-        }
+        String[] img = Utils.transformImg(imgPaths);
         post.setPaths(img);
         return blogRepo.save(post);
     }

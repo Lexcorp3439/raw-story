@@ -3,6 +3,7 @@ package com.egorius.rawstory.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.egorius.rawstory.bot.ServerBot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,9 @@ public class ProductsServiceImpl implements ProductsService {
 
     @Override
     public Product addNewProduct(Product product) {
+        String[] imgPaths = product.getPaths();
+        String[] img = Utils.transformImg(imgPaths);
+        product.setPaths(img);
         return productsRepo.save(product);
     }
 }
