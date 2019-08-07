@@ -20,6 +20,9 @@ public class Order {
     @Column(name = "date")
     private String date;
 
+    @Column(name = "place")
+    private String place;
+
     @Column(name = "comment")
     private String comment;
 
@@ -29,10 +32,11 @@ public class Order {
     public Order() {
     }
 
-    public Order(List<Cake> cakes, String phone, String date, String comment, BigDecimal cost) {
+    public Order(List<Cake> cakes, String phone, String date, String place, String comment, BigDecimal cost) {
         this.cakes = cakes;
         this.phone = phone;
         this.date = date;
+        this.place = place;
         this.comment = comment;
         this.cost = cost;
     }
@@ -69,6 +73,14 @@ public class Order {
         this.date = date;
     }
 
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
     public String getComment() {
         return comment;
     }
@@ -91,6 +103,7 @@ public class Order {
                 "\nНомер заказа: " + id +
                 "\nНомер телефона: " + phone  +
                 "\nДата: " + date  +
+                "\nКуда доставлять: " + comment +
                 "\nКомментарий: " + comment +
                 "\nИтоговая цена: " + cost +
                 "\nСписок тортов:" + cakes.toString();

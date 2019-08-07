@@ -37,19 +37,18 @@ public class OrdersControllerTest {
 
         List<Cake> cakes = new ArrayList<>();
         cakes.add(new Cake("Вкусный", 1, 2d, "Шоколадный", "Клубника", "Манго", "Карамель"));
-        Order order = new Order(cakes, "+78889992345", "Сегодня", "Доставка быстраа", new BigDecimal(345));
+        Order order = new Order(cakes, "+78889992345", "Сегодня", "Улица Пушкина дом Калатушкина","Доставка быстраа", new BigDecimal(345));
 
         mockMvc.perform(MockMvcRequestBuilders
                 .post(path)
                 .content(asJsonString(order))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().isAccepted());
     }
 
 
-    public static String asJsonString(final Object obj) {
+    private static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
         } catch (Exception e) {
