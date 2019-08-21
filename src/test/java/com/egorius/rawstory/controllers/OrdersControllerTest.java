@@ -1,6 +1,7 @@
 package com.egorius.rawstory.controllers;
 
 import com.egorius.rawstory.entitys.Cake;
+import com.egorius.rawstory.entitys.CustomCake;
 import com.egorius.rawstory.entitys.Order;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
@@ -35,9 +36,9 @@ public class OrdersControllerTest {
     public void sendNewOrder() throws Exception {
         String path = PATH.concat("/new");
 
-        List<Cake> cakes = new ArrayList<>();
-        cakes.add(new Cake("Вкусный", 1, 2d, "Шоколадный", "Клубника", "Манго", "Карамель"));
-        Order order = new Order(cakes, "+78889992345", "Сегодня", "Улица Пушкина дом Калатушкина","Доставка быстраа", new BigDecimal(345));
+        List<CustomCake> cakes = new ArrayList<>();
+        cakes.add(new CustomCake( 1, 2d, "Шоколадный", "Клубника", "Манго", "Карамель"));
+        Order order = new Order(null, cakes, "+78889992345", "Сегодня", "Улица Пушкина дом Калатушкина","Доставка быстраа", new BigDecimal(345));
 
         mockMvc.perform(MockMvcRequestBuilders
                 .post(path)

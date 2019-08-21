@@ -13,7 +13,10 @@ public class OrdersController {
 
     @PostMapping(value = "/new")
     public ResponseEntity<Long> addOrder(@RequestBody Order order) {
+        long id  =System.currentTimeMillis();
+        order.setId(id);
         ServerBot.serverBot.sendMsg(order.toString());
+        System.out.println(order.toString());
         return new ResponseEntity<>(order.getId(), HttpStatus.ACCEPTED);
     }
 }

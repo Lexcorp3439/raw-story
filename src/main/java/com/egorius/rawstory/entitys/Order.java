@@ -1,6 +1,7 @@
 package com.egorius.rawstory.entitys;
 
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -13,6 +14,9 @@ public class Order {
 
     @Column(name = "cakes")
     private List<Cake> cakes;
+
+    @Column(name = "custom_cakes")
+    private List<CustomCake> custom;
 
     @Column(name = "phone")
     private String phone;
@@ -32,8 +36,9 @@ public class Order {
     public Order() {
     }
 
-    public Order(List<Cake> cakes, String phone, String date, String place, String comment, BigDecimal cost) {
+    public Order(List<Cake> cakes, List<CustomCake> custom, String phone, String date, String place, String comment, BigDecimal cost) {
         this.cakes = cakes;
+        this.custom = custom;
         this.phone = phone;
         this.date = date;
         this.place = place;
@@ -55,6 +60,14 @@ public class Order {
 
     public void setCakes(List<Cake> cakes) {
         this.cakes = cakes;
+    }
+
+    public List<CustomCake> getCustom() {
+        return custom;
+    }
+
+    public void setCustom(List<CustomCake> custom) {
+        this.custom = custom;
     }
 
     public String getPhone() {
@@ -99,13 +112,19 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Заказ: " +
-                "\nНомер заказа: " + id +
-                "\nНомер телефона: " + phone  +
-                "\nДата: " + date  +
-                "\nКуда доставлять: " + comment +
-                "\nКомментарий: " + comment +
-                "\nИтоговая цена: " + cost +
-                "\nСписок тортов:" + cakes.toString();
+        StringBuilder builder = new StringBuilder();
+        builder.append("Заказ: " + "\nНомер заказа: ").append(id)
+                .append("\nНомер телефона: ").append(phone)
+                .append("\nДата: ").append(date)
+                .append("\nКуда доставлять: ").append(place)
+                .append("\nКомментарий: ").append(comment)
+                .append("\nИтоговая цена: ").append(cost);
+        if (cakes != null) {
+            builder.append("\nСписок тортов из каталога:").append(cakes.toString());
+        }
+        if (custom != null) {
+            builder.append("\nСписок собранных тортов:").append(custom.toString());
+        }
+        return  builder.toString();
     }
 }
